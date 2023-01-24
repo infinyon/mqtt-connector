@@ -1,0 +1,43 @@
+[package]
+name = "mqtt-source"
+group = "fluvio"
+version = "0.6.0"
+apiVersion = "0.6.0"
+fluvio = "0.10.0"
+description = "MQTT source connector"
+license = "Apache-2.0"
+
+[direction]
+source = true
+
+[deployment]
+binary = "mqtt-source"
+
+[custom]
+name = "mqtt"
+required = ["url", "topic"]
+
+[custom.properties.url]
+title = "Url"
+description = "MQTT broker endpoint url"
+type = "string"
+
+[custom.properties.topic]
+title = "Topic"
+description = "MQTT topic"
+type = "string"
+
+[custom.properties.client_id]
+title = "ClientId"
+description = "MQTT client id"
+type = "string"
+
+[custom.properties.payload_output_type]
+title = "PayloadOutputType"
+description = "Output type of payload field: binary or json"
+type = "string"
+
+[custom.properties.timeout]
+title = "Timeout"
+description = "MQTT connection timeout"
+type = "object"
