@@ -5,9 +5,24 @@ edition = "2021"
 publish = false
 license = "Apache 2.0"
 authors = ["Fluvio Contributors <team@fluvio.io>"]
-description = "Fluvio MQTT connector"
+description = "Fluvio MQTT source connector"
 
 [dependencies]
+async-trait = { version = "0.1", default-features = false}
+futures = { version = "0.3", default-features = false}
+anyhow = { version = "1.0" }
+async-std = { version = "1.12",  default-features = false, features = ["attributes", "tokio1"]}
+serde = {version = "1.0", default-features = false, features = ["derive"]}
+serde_json = { version = "1.0", default-features = false, features = ["preserve_order"] }
+url = { version = "2.3", default-features = false }
+thiserror = { version = "1.0", default-features = false }
+uuid = { version = "1.2", features = ["v4"] }
+rumqttc = { version = "0.20", features = ["url", "websocket"] }
+rustls = { version = "0.20" }
+rustls-native-certs = { version = "0.6" }
+
+fluvio = { git = "https://github.com/infinyon/fluvio", tag = "v0.10.4"}
+fluvio-connector-common = { git = "https://github.com/infinyon/fluvio", tag = "v0.10.4", features = ["derive"]}
 
 
 [profile.release-lto]
