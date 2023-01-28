@@ -6,7 +6,7 @@ meta:
   create-topic: true
 mqtt:  
   url: "mqtt://test.mosquitto.org/"  
-  topic: "ag-mqtt-topic-demo"
+  topic: "mqtt-to-fluvio"
   client_id: "my_mqtt"
   timeout:
     secs: 30
