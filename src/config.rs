@@ -1,6 +1,6 @@
 use std::time::Duration;
 
-use fluvio_connector_common::connector;
+use fluvio_connector_common::{connector, secret::SecretString};
 use serde::Deserialize;
 
 const DEFAULT_TIMEOUT_VALUE: Duration = Duration::from_secs(60);
@@ -10,7 +10,7 @@ const DEFAULT_TIMEOUT_VALUE: Duration = Duration::from_secs(60);
 pub(crate) struct MqttConfig {
     #[serde(default = "default_timeout")]
     pub timeout: Duration,
-    pub url: String,
+    pub url: SecretString,
     pub topic: String,
     #[serde(default = "default_client_id")]
     pub client_id: String,
