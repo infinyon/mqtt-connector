@@ -11,13 +11,25 @@ See [docs](https://www.fluvio.io/connectors/inbound/mqtt/) here.
 Tutorial for [MQTT to SQL Pipeline](https://www.fluvio.io/docs/tutorials/mqtt-to-sql/).
 
 ### Configuration
-| Option              | default  | type     | description                                                                                                                                          |
-|:--------------------|:---------|:---------|:-----------------------------------------------------------------------------------------------------------------------------------------------------|
-| timeout             | 60       | Duration | mqtt broker connect timeout in seconds and nanoseconds                                                                                               |
-| url                 | -        | String   | MQTT url which includes schema, domain and port. *USE MQTT_URL* in secrets if you need to supply credentials such as username and password.          |
-| topic               | -        | String   | mqtt topic to subscribe and source events from                                                                                                       |
-| client_id           | UUID V4  | String   | mqtt client ID                                                                                                                                       |
-| payload_output_type | binary   | String   | controls how the output of `payload` field is produced                                                                                               |
+| Option              | default  | type           | description                                                                                                                                          |
+|:--------------------|:---------|:---------      |:-----------------------------------------------------------------------------------------------------------------------------------------------------|
+| timeout             | 60s      | Duration       | mqtt broker connect timeout in seconds and nanoseconds                                                                                               |
+| url                 | -        | SecretString   | MQTT url which includes schema, domain, port and credentials such as username and password.                                                          |
+| topic               | -        | String         | mqtt topic to subscribe and source events from                                                                                                       |
+| client_id           | UUID V4  | String         | mqtt client ID                                                                                                                                       |
+| payload_output_type | binary   | String         | controls how the output of `payload` field is produced                                                                                               |
+
+`url` option with type `SecretString` can be set as raw string value:
+```yaml
+url: "mqtt://test.mosquitto.org/"
+```
+or, as a reference to a secret with the given name:
+```yaml
+url:
+  secret:
+    name: "URL_SECRET_NAME"
+```
+
 
 #### Record Type Output
 
@@ -56,7 +68,10 @@ Run connector locally using `cdk` tool (from root directory or any sub-directory
 ```bash
 fluvio install cdk
 
-cdk deploy local --config config-example.yaml
+cdk deploy start --config config-example.yaml
+
+cdk deploy list # to see the status
+cdk deploy log my-mqtt-connector # to see connector's logs
 ```
 
 Install MQTT Client such as

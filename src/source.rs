@@ -30,8 +30,8 @@ pub(crate) struct MqttSource {
 
 impl MqttSource {
     pub(crate) fn new(config: &MqttConfig) -> Result<Self> {
-        let mut url =
-            Url::parse(&config.url).context("unable to parse mqtt broker endpoint url")?;
+        let mut url = Url::parse(&config.url.resolve()?)
+            .context("unable to parse mqtt broker endpoint url")?;
 
         if !url.query_pairs().any(|(key, _)| key == "client_id") {
             url.query_pairs_mut()
