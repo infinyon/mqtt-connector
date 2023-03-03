@@ -13,6 +13,9 @@ source = true
 [deployment]
 binary = "mqtt-source"
 
+[secret.MQTT_URL]
+type = "env"
+
 [custom]
 name = "mqtt"
 required = ["url", "topic"]
