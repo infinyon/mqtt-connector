@@ -1,0 +1,45 @@
+name: Publish Hub
+
+permissions: read-all
+
+on:
+   workflow_dispatch:
+    inputs:
+      branch:
+        description: "The branch, tag or SHA to checkout"
+        required: true
+        type: string
+        default: "main"
+
+jobs:
+  publish:
+    name: Publish Connector to Hub
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+    steps:
+      - name: Install Fluvio
+        run: |
+          curl -fsS https://packages.fluvio.io/v1/install.sh | bash
+          echo "$HOME/.fluvio/bin" >> $GITHUB_PATH
+      - name: Install Fluvio CDK
+        run: fluvio install cdk --develop
+      - name: Fluvio Login to Hub
+        run: fluvio cloud login --email ${{ secrets.HUB_USER_EMAIL }} --password ${{ secrets.HUB_USER_PASSWORD }}
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.inputs.branch }}
+      - name: Install Cross
+        run: cargo install cross
+      - name: Build
+        run: |
+          cross build --release --target aarch64-unknown-linux-musl
+          cp target/aarch64-unknown-linux-musl/release/* target/release/ | true
+      - name: Publish
+        run: |
+          cat hub/package-meta.yaml
+          cdk publish --public-yes
+
+
+    
+
