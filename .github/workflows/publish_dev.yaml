@@ -17,6 +17,9 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: true
+      matrix:
+        rust-profile: [release]
+        rust-target: [aarch64-unknown-linux-musl]  
     steps:
       - name: Install Fluvio
         run: |
@@ -33,8 +36,8 @@ jobs:
         run: cargo install cross
       - name: Build
         run: |
-          cross build --release --target aarch64-unknown-linux-musl
-          cp target/aarch64-unknown-linux-musl/release/* target/release/ | true
+          cross build --profile ${{ matrix.rust-profile }}  --target ${{ matrix.rust-target }}
+          cp target/${{ matrix.rust-target }}/${{ matrix.rust-profile }}/* target/${{ matrix.rust-profile }}/ | true
       - name: Publish
         run: |
           cat hub/package-meta.yaml
