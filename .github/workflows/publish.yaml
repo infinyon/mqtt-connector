@@ -32,6 +32,9 @@ jobs:
       - uses: actions/checkout@v3
         with:
           ref: ${{ github.event.inputs.branch }}
+      - uses: Swatinem/rust-cache@v2
+        with:
+          key: ${{ matrix.rust-target }}-${{ matrix.rust-profile }}
       - name: Install Cross
         run: cargo install cross
       - name: Build
