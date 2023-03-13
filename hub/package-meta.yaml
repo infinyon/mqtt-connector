@@ -1,11 +1,11 @@
 ---
-package_format_version: "0.2"
+package_format_version: "0.3"
 name: mqtt-source
-version: 0.1.0
-group: fluvio
+version: 0.1.1
+group: infinyon
 description: MQTT source connector
 license: e.g. Apache2
-visibility: private
+visibility: public
 manifest:
   - Connector.toml
   - target/release/mqtt-source  
