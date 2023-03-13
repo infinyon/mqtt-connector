@@ -3,7 +3,10 @@ name: Publish Hub
 permissions: read-all
 
 on:
-   workflow_dispatch:
+  push:
+    tags:        
+      - v*
+  workflow_dispatch:
     inputs:
       branch:
         description: "The branch, tag or SHA to checkout"
