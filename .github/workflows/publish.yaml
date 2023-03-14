@@ -47,7 +47,7 @@ jobs:
       - name: Publish
         run: |
           cat hub/package-meta.yaml
-          cdk publish --public-yes
+          cdk publish --public-yes --target ${{ matrix.rust-target }}
 
 
     

@@ -44,7 +44,7 @@ jobs:
       - name: Publish
         run: |
           cat hub/package-meta.yaml
-          cdk publish --remote ${{ vars.DEV_HUB_URL }} --public-yes
+          cdk publish --remote ${{ vars.DEV_HUB_URL }} --public-yes --target ${{ matrix.rust-target }}
 
 
     
