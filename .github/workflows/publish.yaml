@@ -108,16 +108,34 @@ jobs:
       - uses: Swatinem/rust-cache@v2
         with:
           key: ${{ matrix.rust-target }}-${{ matrix.rust-profile }}
-      - name: Compile OpenSSL
-        run: | 
+      - name: Set OpenSSL target dir ENV 
+        run: |
           export OPENSSL_TARGET_DIR=$HOME/openssl-aarch64
           echo "OPENSSL_TARGET_DIR=$OPENSSL_TARGET_DIR" >> $GITHUB_ENV
+      - name: Restore compiled OpenSSL
+        id: compiled-openssl-restore
+        uses: actions/cache/restore@v3
+        with:
+          path: |
+           ${{ env.OPENSSL_TARGET_DIR }}
+          key: ${{ matrix.rust-target }}-openssl-${{ env.OPENSSL_VERSION }}    
+      - name: Compile OpenSSL
+        if: steps.compiled-openssl-restore.outputs.cache-hit != 'true'
+        run: | 
           wget https://www.openssl.org/source/openssl-$OPENSSL_VERSION.tar.gz
           tar xvf openssl-$OPENSSL_VERSION.tar.gz
           cd openssl-$OPENSSL_VERSION
           ./configure darwin64-arm64-cc --prefix="$OPENSSL_TARGET_DIR"
           make
           make install
+      - name: Save compiled OpenSSL
+        if: steps.compiled-openssl-restore.outputs.cache-hit != 'true'
+        id: compiled-openssl-save
+        uses: actions/cache/save@v3
+        with:
+          path: |
+           ${{ env.OPENSSL_TARGET_DIR }}
+          key: ${{ steps.compiled-openssl-restore.outputs.cache-primary-key }}   
       - name: Build
         run: |
           rustup target add aarch64-apple-darwin
