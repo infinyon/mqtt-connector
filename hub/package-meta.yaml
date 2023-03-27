@@ -7,6 +7,6 @@ description: MQTT source connector
 license: e.g. Apache2
 visibility: public
 manifest:
-  - Connector.toml
-  - target/release/mqtt-source  
-  - README.md
+  - ../Connector.toml
+  - ../target/release/mqtt-source  
+  - ../README.md
