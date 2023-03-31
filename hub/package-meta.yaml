@@ -1,7 +1,7 @@
 ---
 package_format_version: "0.3"
 name: mqtt-source
-version: 0.1.2
+version: 0.1.0
 group: infinyon
 description: MQTT source connector
 license: e.g. Apache2
