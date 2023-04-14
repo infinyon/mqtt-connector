@@ -6,6 +6,10 @@ concurrency:
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - staging
+      - trying
   pull_request:
     branches: [main]
     paths:
@@ -116,3 +120,13 @@ jobs:
           FLUVIO_CLOUD_TEST_USERNAME: ${{ secrets.FLUVIO_CLOUD_TEST_USERNAME }}
           FLUVIO_CLOUD_TEST_PASSWORD: ${{ secrets.FLUVIO_CLOUD_TEST_PASSWORD }}
         run: make cloud_e2e_test
+
+  done:
+    name: Done
+    needs:
+      - check
+      - integration_tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Done
+        run: echo "Done!"
