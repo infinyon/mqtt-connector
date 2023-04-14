@@ -108,6 +108,7 @@ jobs:
         run: |
           sudo apt-add-repository ppa:mosquitto-dev/mosquitto-ppa
           sudo apt-get update
+          sudo apt install mosquitto mosquitto-clients
 
       - name: Cloud E2E Tests
         timeout-minutes: 20
