@@ -33,7 +33,7 @@ teardown() {
 
     # We are using the same Topic for MQTT as for Connector
     mosquitto_pub -h test.mosquitto.org -t $TOPIC -m '{"device": {"device_id":"$UUID", "name":"device17"}}'
-    sleep 15
+    sleep 35
 
     echo $(fluvio consume $TOPIC -B -d | jq .mqtt_topic)
     assert_success
