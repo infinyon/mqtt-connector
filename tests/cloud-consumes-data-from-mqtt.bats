@@ -35,6 +35,6 @@ teardown() {
     mosquitto_pub -h test.mosquitto.org -t $TOPIC -m '{"device": {"device_id":"$UUID", "name":"device17"}}'
     sleep 15
 
-    fluvio consume $TOPIC -B -d | jq .mqtt_topic | grep $TOPIC
+    echo $(fluvio consume $TOPIC -B -d | jq .mqtt_topic)
     assert_success
 }
