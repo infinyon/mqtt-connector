@@ -45,6 +45,12 @@ jobs:
       - name: Setup BATS
         uses: mig4/setup-bats@v1
 
+      - name: Install Mosquitto
+        run: |
+          sudo apt-add-repository ppa:mosquitto-dev/mosquitto-ppa
+          sudo apt-get update
+          sudo apt install -y mosquitto mosquitto-clients
+
       - name: Test Cloud Production
         timeout-minutes: 20
         if: ${{ matrix.environment == 'Production' }}
