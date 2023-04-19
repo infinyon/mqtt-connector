@@ -32,25 +32,19 @@ jobs:
       RUSTV: ${{ matrix.rust }}
       TARGET: ${{ matrix.rust-target }}
     steps:
-      - name: Checkout Source Code
-        uses: actions/checkout@v3
-
+      - uses: actions/checkout@v3
       - name: Install Rust stable
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
           components: clippy
-
-      - name: Setup Rust Cache
-        uses: Swatinem/rust-cache@v2
+      - uses: Swatinem/rust-cache@v2
         with:
           key: ${{ matrix.rust-target }}-${{ matrix.check }}
-
       - name: Cargo test
         if: ${{ matrix.check == 'test' }}
         run: |
           cargo test
-
       - name: Cargo check
         if: ${{ matrix.check == 'check' }}
         run: |
@@ -64,43 +58,53 @@ jobs:
         if: ${{ matrix.check == 'clippy' }}
         run: cargo clippy --all-targets -- -D warnings
 
- integration_tests:
-     name: Integration testing on - ${{ matrix.os }}.
-     runs-on: ${{ matrix.os }}
-     strategy:
-       fail-fast: false
-       matrix:
-         os: [ubuntu-latest]
-     env:
-       RUST_BACKTRACE: full
-     steps:
-       - uses: actions/checkout@v3
-       - uses: AbsaOSS/k3d-action@v2.4.0
-         name: "Create fluvio k3d Cluster"
-         with:
-           cluster-name: "fluvio"
-           args: --timeout 5m
-       - name: Ensure k3d cluster is ready
-         run: |
-           sleep 5
-           ./actions/k3d-check.sh
-       - name: Install Fluvio Local Cluster
-         timeout-minutes: 10
-         uses: infinyon/fluvio@master
-         with:
-           cluster-type: k3d
-           version: stable
-       - name: Check Fluvio Installation
-         run: |
-           sleep 10
-           fluvio version
-           fluvio topic list
-           fluvio topic create foobar
-           sleep 3
-           echo foo | fluvio produce foobar
-           fluvio consume foobar -B -d
-       - name: Install Fluvio CDK
-         run: fluvio install cdk --develop # TODO: remove --develope when cdk will be available for public usage
-       - name: Run Integration Test
-         timeout-minutes: 20
-         run: make integration_tests
+  integration_tests:
+    name: Integration testing on - ${{ matrix.os }}.
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+    env:
+      RUST_BACKTRACE: full
+    steps:
+      - uses: actions/checkout@v3
+      - uses: AbsaOSS/k3d-action@v2.4.0
+        name: "Create fluvio k3d Cluster"
+        with:
+          cluster-name: "fluvio"
+          args: --timeout 5m
+      - name: Ensure k3d cluster is ready
+        run: |
+          sleep 5
+          ./actions/k3d-check.sh
+      - name: Install Fluvio Local Cluster
+        timeout-minutes: 10
+        uses: infinyon/fluvio@master
+        with:
+          cluster-type: k3d
+          version: stable
+      - name: Check Fluvio Installation
+        run: |
+          sleep 10
+          fluvio version
+          fluvio topic list
+          fluvio topic create foobar
+          sleep 3
+          echo foo | fluvio produce foobar
+          fluvio consume foobar -B -d
+      - name: Install Fluvio CDK
+        run: fluvio install cdk --develop # TODO: remove --develope when cdk will be available for public usage
+      - name: Run Integration Test
+        timeout-minutes: 20
+        run: make integration_tests
+
+  done:
+    name: Done
+    needs:
+      - check
+      - integration_tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Done
+        run: echo "Done!"
