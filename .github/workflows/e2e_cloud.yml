@@ -1,4 +1,4 @@
-name: E2E Cloud
+name: E2E Integrations Test Cloud
 
 concurrency:
   group: e2e-cloud-${{ github.ref }}
@@ -10,12 +10,6 @@ on:
     branches:
       - main
       - staging
-  pull_request:
-    branches: [main]
-    paths:
-      - "**"
-      - "!/*.md"
-      - "!/**.md"
 
 jobs:
   cloud_e2e_tests:
