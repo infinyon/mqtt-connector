@@ -1,0 +1,15 @@
+meta:
+  version: 0.1.0
+  name: CONNECTOR
+  type: mqtt-source
+  topic: TOPIC
+  direction: source
+  create-topic: true
+mqtt:
+  url: "mqtt://test.mosquitto.org/"
+  topic: TOPIC
+  client_id: "my_mqtt"
+  payload_output_type: json
+  timeout:
+    secs: 30
+    nanos: 0
