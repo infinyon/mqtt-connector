@@ -71,6 +71,11 @@ jobs:
       RUST_BACKTRACE: full
     steps:
       - uses: actions/checkout@v3
+      - name: Install musl-tools
+        run: |
+          set -ex
+          sudo apt-get update
+          sudo apt-get install -y musl-tools
       - uses: AbsaOSS/k3d-action@v2.4.0
         name: "Create fluvio k3d Cluster"
         with:
@@ -92,6 +97,7 @@ jobs:
           toolchain: stable
           components: clippy
           target: ${{ matrix.rust-target }}
+
       - name: Check Fluvio Installation
         run: |
           sleep 10
