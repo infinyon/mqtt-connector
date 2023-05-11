@@ -97,6 +97,7 @@ jobs:
           toolchain: stable
           components: clippy
           target: ${{ matrix.rust-target }}
+          override: true
 
       - name: Check Fluvio Installation
         run: |
