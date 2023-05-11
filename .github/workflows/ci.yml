@@ -95,6 +95,10 @@ jobs:
           fluvio consume foobar -B -d
       - name: Install Fluvio CDK
         run: fluvio install cdk --develop # TODO: remove --develope when cdk will be available for public usage
+      - name: Install Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          target: x86_64-unknown-linux-musl
       - name: Run Integration Test
         timeout-minutes: 20
         run: make integration_tests
