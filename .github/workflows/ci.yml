@@ -25,7 +25,7 @@ jobs:
       matrix:
         os: [ubuntu-latest]
         rust: [stable]
-        rust-target: [x86_64-unknown-linux-gnu]
+        rust-target: [x86_64-unknown-linux-musl]
         check: [test, check, fmt, clippy]
     env:
       RUST_BACKTRACE: full
@@ -38,6 +38,7 @@ jobs:
         with:
           toolchain: stable
           components: clippy
+          target: ${{ matrix.rust-target }}
       - uses: Swatinem/rust-cache@v2
         with:
           key: ${{ matrix.rust-target }}-${{ matrix.check }}
@@ -65,6 +66,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
+        rust-target: [x86_64-unknown-linux-musl]
     env:
       RUST_BACKTRACE: full
     steps:
@@ -84,6 +86,12 @@ jobs:
         with:
           cluster-type: k3d
           version: stable
+      - name: Install Rust stable
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          components: clippy
+          target: ${{ matrix.rust-target }}
       - name: Check Fluvio Installation
         run: |
           sleep 10
