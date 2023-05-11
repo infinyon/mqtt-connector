@@ -21,8 +21,8 @@ rumqttc = { version = "0.20", features = ["url", "websocket"] }
 rustls = { version = "0.20" }
 rustls-native-certs = { version = "0.6" }
 
-fluvio = { git = "https://github.com/infinyon/fluvio", tag = "v0.10.8-dev-3" }
-fluvio-connector-common = { git = "https://github.com/infinyon/fluvio", tag = "v0.10.8-dev-3", features = ["derive"]}
+fluvio = { git = "https://github.com/infinyon/fluvio", tag = "v0.10.9-dev-1" }
+fluvio-connector-common = { git = "https://github.com/infinyon/fluvio", tag = "v0.10.9-dev-1", features = ["derive"]}
 
 
 [profile.release-lto]
