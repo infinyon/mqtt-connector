@@ -17,8 +17,8 @@ serde_json = { version = "1.0", default-features = false, features = ["preserve_
 url = { version = "2.4", default-features = false }
 thiserror = { version = "1.0", default-features = false }
 uuid = { version = "1.2", features = ["v4"] }
-rumqttc = { version = "0.21", features = ["url", "websocket"] }
-rustls = { version = "0.20" }
+rumqttc = { version = "0.22", features = ["url", "websocket"] }
+rustls = { version = "0.21" }
 rustls-native-certs = { version = "0.6" }
 
 fluvio = { git = "https://github.com/infinyon/fluvio", tag = "v0.10.10" }
