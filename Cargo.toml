@@ -22,7 +22,7 @@ rustls = { version = "0.21" }
 rustls-native-certs = { version = "0.6" }
 
 fluvio = { git = "https://github.com/infinyon/fluvio", tag = "v0.10.12" }
-fluvio-connector-common = { git = "https://github.com/infinyon/fluvio", tag = "v0.10.12", features = ["derive"]}
+fluvio-connector-common = { git = "https://github.com/infinyon/fluvio", tag = "v0.10.13", features = ["derive"]}
 
 
 [profile.release-lto]
