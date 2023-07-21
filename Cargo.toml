@@ -11,7 +11,7 @@ description = "Fluvio MQTT source connector"
 async-trait = { version = "0.1", default-features = false}
 futures = { version = "0.3", default-features = false}
 anyhow = { version = "1.0" }
-async-std = { version = "1.12",  default-features = false, features = ["attributes", "tokio1"]}
+async-std = { version = "1.8",  default-features = false, features = ["attributes", "tokio1"] }
 serde = {version = "1.0", default-features = false, features = ["derive"]}
 serde_json = { version = "1.0", default-features = false, features = ["preserve_order"] }
 url = { version = "2.4", default-features = false }
@@ -21,9 +21,8 @@ rumqttc = { version = "0.22", features = ["url", "websocket"] }
 rustls = { version = "0.21" }
 rustls-native-certs = { version = "0.6" }
 
-fluvio = { git = "https://github.com/infinyon/fluvio", tag = "v0.10.12" }
-fluvio-connector-common = { git = "https://github.com/infinyon/fluvio", tag = "v0.10.12", features = ["derive"]}
-
+fluvio = { git = "https://github.com/infinyon/fluvio", tag = "v0.10.13" }
+fluvio-connector-common = { git = "https://github.com/infinyon/fluvio", tag = "v0.10.13", features = ["derive"] }
 
 [profile.release-lto]
 inherits = "release"
