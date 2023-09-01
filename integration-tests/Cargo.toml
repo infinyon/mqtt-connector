@@ -1,6 +1,6 @@
 [package]
 name = "integration-tests"
-version = "0.1.0"
+version = "0.0.0"
 edition = "2021"
 publish = false
 license = "Apache 2.0"
@@ -13,11 +13,11 @@ env_logger = { version = "0.10", default-features = false, features = ["auto-col
 bollard = { version = "0.14", default-features = false }
 anyhow = { version = "1.0", default-features = false }
 async-std = { version = "1.12", default-features = false, features = ["attributes", "tokio1"] }
-fluvio = { version = "0.16", default-features = false }
+fluvio = { version = "0.20", default-features = false }
 futures-util = { version = "0.3", default-features = false }
 rumqttc = { version = "0.20", default-features = false }
 serde = { version = "1.0", default-features = false, features = ["derive"] }
 serde_yaml = { version = "0.9", default-features = false }
-fluvio-future = { version = "0.4", default-features = false, features = ["retry"] }
+fluvio-future = { version = "0.6", default-features = false, features = ["retry", "task", "net"] }
 serde_json = { version = "1.0", default-features = false }
 
