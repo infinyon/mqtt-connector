@@ -16,7 +16,7 @@ serde = {version = "1.0", default-features = false, features = ["derive"]}
 serde_json = { version = "1.0", default-features = false, features = ["preserve_order"] }
 url = { version = "2.4", default-features = false }
 thiserror = { version = "1.0", default-features = false }
-uuid = { version = "1.4", features = ["v4"] }
+uuid = { version = "1.6", features = ["v4"] }
 rumqttc = { version = "0.22", features = ["url", "websocket"] }
 rustls = { version = "0.21" }
 rustls-native-certs = { version = "0.6" }
