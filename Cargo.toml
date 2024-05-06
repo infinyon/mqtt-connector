@@ -19,7 +19,7 @@ thiserror = { version = "1.0", default-features = false }
 uuid = { version = "1.4", features = ["v4"] }
 rumqttc = { workspace = true, features = ["url", "websocket"] }
 rustls = { workspace = true }
-rustls-native-certs = { version = "0.6" }
+rustls-native-certs = { version = "0.7" }
 
 fluvio = { workspace = true }
 fluvio-connector-common = { git = "https://github.com/infinyon/fluvio", rev = "d9a76327b674614c7373a9c12eb6a0ed2fcc4dc0", features = ["derive"]}
