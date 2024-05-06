@@ -8,12 +8,12 @@ authors = ["Fluvio Contributors <team@fluvio.io>"]
 description = "Fluvio MQTT source connector"
 
 [dependencies]
-async-trait = { version = "0.1", default-features = false}
+async-trait = { workspace = true }
 futures = { version = "0.3", default-features = false}
 anyhow = { version = "1.0" }
 async-std = { version = "1.12",  default-features = false, features = ["attributes", "tokio1"]}
-serde = {version = "1.0", default-features = false, features = ["derive"]}
-serde_json = { version = "1.0", default-features = false, features = ["preserve_order"] }
+serde = {workspace = true, features = ["derive"]}
+serde_json = { workspace = true, features = ["preserve_order"] }
 url = { version = "2.4", default-features = false }
 thiserror = { version = "1.0", default-features = false }
 uuid = { version = "1.4", features = ["v4"] }
@@ -21,10 +21,28 @@ rumqttc = { version = "0.22", features = ["url", "websocket"] }
 rustls = { version = "0.21" }
 rustls-native-certs = { version = "0.6" }
 
-fluvio = { git = "https://github.com/infinyon/fluvio", rev = "d9a76327b674614c7373a9c12eb6a0ed2fcc4dc0" }
+fluvio = { workspace = true }
 fluvio-connector-common = { git = "https://github.com/infinyon/fluvio", rev = "d9a76327b674614c7373a9c12eb6a0ed2fcc4dc0", features = ["derive"]}
 
 
 [profile.release-lto]
 inherits = "release"
 lto = true
+
+
+[workspace]
+members = [
+    "integration-tests",
+    ".",
+]
+
+default-members = [
+    "."
+]
+
+[workspace.dependencies]
+fluvio = { git = "https://github.com/infinyon/fluvio", rev = "d9a76327b674614c7373a9c12eb6a0ed2fcc4dc0" }
+fluvio-future = { version = "0.6" }
+async-trait = { version = "0.1", default-features = false}
+serde_json = { version = "1.0", default-features = false }
+serde = {version = "1.0", default-features = false }
