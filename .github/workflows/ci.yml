@@ -6,10 +6,7 @@ concurrency:
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - staging
-      - trying
+  merge_group:
   pull_request:
     branches: [main]
     paths:
@@ -76,21 +73,11 @@ jobs:
           set -ex
           sudo apt-get update
           sudo apt-get install -y musl-tools
-      - uses: AbsaOSS/k3d-action@v2.4.0
-        name: "Create fluvio k3d Cluster"
-        with:
-          cluster-name: "fluvio"
-          args: --timeout 5m
-      - name: Ensure k3d cluster is ready
-        run: |
-          sleep 5
-          ./actions/k3d-check.sh
       - name: Install Fluvio Local Cluster
         timeout-minutes: 10
         uses: infinyon/fluvio@master
         with:
-          cluster-type: k3d
-          version: stable
+          cluster-type: local
       - name: Install Rust stable
         uses: actions-rs/toolchain@v1
         with:
@@ -108,8 +95,6 @@ jobs:
           sleep 3
           echo foo | fluvio produce foobar
           fluvio consume foobar -B -d
-      - name: Install Fluvio CDK
-        run: fluvio install cdk --develop # TODO: remove --develope when cdk will be available for public usage
       - name: Install Rust
         uses: actions-rs/toolchain@v1
         with:
@@ -126,5 +111,23 @@ jobs:
       - integration_tests
     runs-on: ubuntu-latest
     steps:
+      - name: Dump needs context
+        env:
+          CONTEXT: ${{ toJson(needs) }}
+        run: |
+          echo -e "\033[33;1;4mDump context\033[0m"
+          echo -e "$CONTEXT\n"
+      - name: Report failure on cancellation
+        if: ${{ contains(needs.*.result, 'cancelled') || cancelled() }}
+        run: exit 1
+      - name: Failing test and build
+        if: ${{ contains(needs.*.result, 'failure') }}
+        run: exit 1
+      - name: Don't allow skipped
+        if: ${{ contains(needs.*.result, 'skipped')  && github.event_name == 'merge_group' }}
+        run: exit 1
+      - name: Successful test and build
+        if: ${{ !(contains(needs.*.result, 'failure')) }}
+        run: exit 0
       - name: Done
         run: echo "Done!"
