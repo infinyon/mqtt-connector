@@ -8,13 +8,13 @@ authors = ["Fluvio Contributors <team@fluvio.io>"]
 description = "Integration tests for Fluvio MQTT source connector"
 
 [dependencies]
+anyhow = { workspace = true }
+async-std = { workspace = true, features = ["attributes", "tokio1"] }
 log = { version = "0.4", default-features = false }
 env_logger = { version = "0.10", default-features = false, features = ["auto-color", "humantime"] }
 bollard = { version = "0.14", default-features = false }
-anyhow = { version = "1.0", default-features = false }
-async-std = { version = "1.12", default-features = false, features = ["attributes", "tokio1"] }
 futures-util = { version = "0.3", default-features = false }
-rumqttc = { version = "0.20", default-features = false }
+rumqttc = { workspace = true }
 serde = { workspace = true, features = ["derive"] }
 serde_yaml = { version = "0.9", default-features = false }
 serde_json = { workspace = true }

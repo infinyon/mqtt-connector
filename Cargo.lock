@@ -1781,7 +1781,7 @@ dependencies = [
  "fluvio-future",
  "futures-util",
  "log",
- "rumqttc 0.20.0",
+ "rumqttc",
  "serde",
  "serde_json",
  "serde_yaml",
@@ -2049,7 +2049,7 @@ dependencies = [
  "fluvio",
  "fluvio-connector-common",
  "futures",
- "rumqttc 0.22.0",
+ "rumqttc",
  "rustls",
  "rustls-native-certs",
  "serde",
@@ -2335,12 +2335,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "pollster"
-version = "0.2.5"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5da3b0203fd7ee5720aa0b5e790b591aa5d3f41c3ed2c34a3a393382198af2f7"
-
-[[package]]
 name = "powerfmt"
 version = "0.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2532,21 +2526,6 @@ dependencies = [
  "untrusted",
  "web-sys",
  "winapi",
-]
-
-[[package]]
-name = "rumqttc"
-version = "0.20.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8b616bf8b706c2a6235604f5d93f9578c37d0c6161e13898b68a1da4af2d812c"
-dependencies = [
- "bytes",
- "flume",
- "futures",
- "log",
- "pollster",
- "thiserror",
- "tokio",
 ]
 
 [[package]]
