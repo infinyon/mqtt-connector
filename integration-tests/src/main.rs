@@ -6,18 +6,23 @@ use std::{
 };
 
 use anyhow::{Context, Result};
-use async_std::{channel::bounded, task};
+use async_std::{channel::bounded, stream::StreamExt, task};
 use bollard::{
     container::{Config, CreateContainerOptions, RemoveContainerOptions, StartContainerOptions},
     image::CreateImageOptions,
     service::{HostConfig, PortBinding},
     Docker,
 };
-use fluvio::{consumer::Record, metadata::topic::TopicSpec, Fluvio, Offset};
-use fluvio_future::retry::{retry, ExponentialBackoff, RetryExt};
 use futures_util::stream::TryStreamExt;
 use log::{debug, info};
 use serde::{Deserialize, Serialize};
+
+use fluvio::{
+    consumer::{ConsumerConfigExt, Record},
+    metadata::topic::TopicSpec,
+    Fluvio, Offset,
+};
+use fluvio_future::retry::{retry, ExponentialBackoff, RetryExt};
 
 const MOSQUITTO_IMAGE: &str = "eclipse-mosquitto:1.6.1";
 const MQTT_HOST_PORT: &str = "1883";
@@ -266,7 +271,7 @@ async fn connect_fluvio() -> Result<Fluvio> {
 }
 
 async fn remove_topic(fluvio: &Fluvio, topic: &str) -> Result<()> {
-    fluvio.admin().await.delete::<TopicSpec, _>(topic).await?;
+    fluvio.admin().await.delete::<TopicSpec>(topic).await?;
     Ok(())
 }
 
@@ -370,13 +375,15 @@ async fn produce_to_mqtt<V: Into<Vec<u8>> + std::fmt::Debug + Send + Sync + 'sta
 }
 
 async fn read_from_fluvio(fluvio: &Fluvio, topic: &str, count: usize) -> Result<Vec<Record>> {
-    use futures_util::StreamExt;
-
-    let consumer = fluvio.partition_consumer(topic, 0).await?;
-    let stream_collected = consumer
-        .stream(Offset::beginning())
+    let consumer_config = ConsumerConfigExt::builder()
+        .topic(topic)
+        .offset_start(Offset::beginning())
+        .build()?;
+    let stream = fluvio
+        .consumer_with_config(consumer_config)
         .await?
-        .take(count)
+        .take(count);
+    let stream_collected = stream
         .collect::<Vec<_>>()
         .timeout(Duration::from_secs(30))
         .await
