@@ -50,7 +50,7 @@ This is an example of connector config file:
 # config-example.yaml
 apiVersion: 0.1.0
 meta:
-  version: 0.2.5
+  version: 0.2.6
   name: my-mqtt-connector
   type: mqtt-source
   topic: mqtt-topic
@@ -105,7 +105,7 @@ The previous example can be extended to add extra transformations to outgoing re
 # config-example.yaml
 apiVersion: 0.1.0
 meta:
-  version: 0.2.5
+  version: 0.2.6
   name: my-mqtt-connector
   type: mqtt-source
   topic: mqtt-topic
@@ -118,7 +118,7 @@ mqtt:
     nanos: 0
   payload_output_type: json
 transforms:
-  - uses: infinyon/jolt@0.1.0
+  - uses: infinyon/jolt@0.4.1
     with:
       spec:
         - operation: shift
