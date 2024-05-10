@@ -118,7 +118,7 @@ mqtt:
     nanos: 0
   payload_output_type: json
 transforms:
-  - uses: infinyon/jolt@0.1.0
+  - uses: infinyon/jolt@0.4.1
     with:
       spec:
         - operation: shift
