@@ -19,5 +19,5 @@ serde = { workspace = true, features = ["derive"] }
 serde_yaml = { version = "0.9", default-features = false }
 serde_json = { workspace = true }
 
-fluvio = { workspace = true, default-features = false }
+fluvio = { workspace = true }
 fluvio-future = { workspace = true, default-features = false, features = ["retry", "task", "net"] }
