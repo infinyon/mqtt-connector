@@ -1,21 +1,23 @@
 use std::time::{Duration, Instant};
 
-use crate::formatter::{self, Formatter};
-use crate::{config::MqttConfig, error::MqttConnectorError, event::MqttEvent};
 use anyhow::{Context, Result};
 use async_std::channel::{self, Receiver, Sender};
 use async_std::task::spawn;
 use async_trait::async_trait;
+use futures::{stream::LocalBoxStream, StreamExt};
+use rumqttc::{AsyncClient, EventLoop, MqttOptions, QoS, Transport};
+use rustls::ClientConfig;
+use url::Url;
+
 use fluvio::Offset;
 use fluvio_connector_common::tracing::info;
 use fluvio_connector_common::{
     tracing::{error, warn},
     Source,
 };
-use futures::{stream::LocalBoxStream, StreamExt};
-use rumqttc::{AsyncClient, EventLoop, MqttOptions, QoS, Transport};
-use rustls::ClientConfig;
-use url::Url;
+
+use crate::formatter::{self, Formatter};
+use crate::{config::MqttConfig, error::MqttConnectorError, event::MqttEvent};
 
 const CHANNEL_BUFFER_SIZE: usize = 10000;
 const MQTT_CLIENT_BUFFER_SIZE: usize = 10;
@@ -56,12 +58,9 @@ impl MqttSource {
             for cert in
                 rustls_native_certs::load_native_certs().context("could not load platform certs")?
             {
-                root_cert_store
-                    .add(&rustls::Certificate(cert.0))
-                    .context("Failed to parse DER")?;
+                root_cert_store.add(cert).context("Failed to parse DER")?;
             }
             let client_config = ClientConfig::builder()
-                .with_safe_defaults()
                 .with_root_certificates(root_cert_store)
                 .with_no_client_auth();
 
