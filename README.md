@@ -66,8 +66,6 @@ mqtt:
 
 Run connector locally using `cdk` tool (from root directory or any sub-directory):
 ```bash
-fluvio install cdk
-
 cdk deploy start --config config-example.yaml
 
 cdk deploy list # to see the status
