@@ -65,6 +65,7 @@ mqtt:
 ```
 
 Run connector locally using `cdk` tool (from root directory or any sub-directory):
+
 ```bash
 cdk deploy start --config config-example.yaml
 
