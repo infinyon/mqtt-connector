@@ -6,7 +6,7 @@ mod source;
 
 use config::MqttConfig;
 
-use fluvio::{RecordKey, TopicProducer};
+use fluvio::{RecordKey, TopicProducerPool};
 use fluvio_connector_common::{
     connector,
     tracing::{debug, trace},
@@ -16,7 +16,7 @@ use futures::StreamExt;
 use source::MqttSource;
 
 #[connector(source)]
-async fn start(config: MqttConfig, producer: TopicProducer) -> Result<()> {
+async fn start(config: MqttConfig, producer: TopicProducerPool) -> Result<()> {
     debug!(?config);
     let source = MqttSource::new(&config)?;
     let mut stream = source.connect(None).await?;
