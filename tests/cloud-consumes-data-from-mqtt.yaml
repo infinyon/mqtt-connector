@@ -1,5 +1,5 @@
 meta:
-  version: 0.1.0
+  version: latest
   name: CONNECTOR
   type: mqtt-source
   topic: TOPIC
