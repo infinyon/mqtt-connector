@@ -42,7 +42,7 @@ default-members = [
 [workspace.dependencies]
 anyhow = { version = "1.0.86" }
 async-trait = { version = "0.1", default-features = false}
-async-std = { version = "1.12",  default-features = false }
+async-std = { version = "1.13",  default-features = false }
 serde_json = { version = "1.0", default-features = false }
 serde = {version = "1.0", default-features = false }
 rumqttc = { version = "0.24" }
