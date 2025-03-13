@@ -53,4 +53,4 @@ fluvio-connector-common = { git = "https://github.com/infinyon/fluvio", tag = "v
 fluvio-future = { version = "0.7.0", default-features = false }
 
 # transitive version selection
-bytes = { version = "1.8.0" }
+bytes = { version = "1.10.1" }
