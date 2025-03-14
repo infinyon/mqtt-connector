@@ -4,6 +4,8 @@ use fluvio_connector_common::{connector, secret::SecretString};
 use serde::Deserialize;
 
 const DEFAULT_TIMEOUT_VALUE: Duration = Duration::from_secs(60);
+const MAX_INCOMING_PACKET_SIZE: usize = 10 * 1024;
+const MAX_OUTGOING_PACKET_SIZE: usize = 10 * 1024;
 
 #[connector(config, name = "mqtt")]
 #[derive(Debug)]
@@ -16,6 +18,10 @@ pub(crate) struct MqttConfig {
     pub client_id: String,
     #[serde(default)]
     pub payload_output_type: OutputType,
+    #[serde(default = "defualt_max_incoming_packet_size")]
+    pub max_incoming_packet_size: usize,
+    #[serde(default = "defualt_max_outgoing_packet_size")]
+    pub max_outgoing_packet_size: usize,
 }
 
 #[derive(Debug, Deserialize, Default)]
@@ -32,4 +38,12 @@ fn default_timeout() -> Duration {
 
 fn default_client_id() -> String {
     uuid::Uuid::new_v4().to_string()
+}
+
+fn defualt_max_incoming_packet_size() -> usize {
+    MAX_INCOMING_PACKET_SIZE
+}
+
+fn defualt_max_outgoing_packet_size() -> usize {
+    MAX_OUTGOING_PACKET_SIZE
 }
