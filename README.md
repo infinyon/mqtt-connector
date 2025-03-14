@@ -11,13 +11,15 @@ See [docs](https://www.fluvio.io/connectors/inbound/mqtt/) here.
 Tutorial for [MQTT to SQL Pipeline](https://www.fluvio.io/docs/tutorials/mqtt-to-sql/).
 
 ### Configuration
-| Option              | default  | type           | description                                                                                                                                          |
-|:--------------------|:---------|:---------      |:-----------------------------------------------------------------------------------------------------------------------------------------------------|
-| timeout             | 60s      | Duration       | mqtt broker connect timeout in seconds and nanoseconds                                                                                               |
-| url                 | -        | SecretString   | MQTT url which includes schema, domain, port and credentials such as username and password.                                                          |
-| topic               | -        | String         | mqtt topic to subscribe and source events from                                                                                                       |
-| client_id           | UUID V4  | String         | mqtt client ID. Using same client id in different connectors may close connection                                                                                                                                       |
-| payload_output_type | binary   | String         | controls how the output of `payload` field is produced                                                                                               |
+| Option                   | default | type         | description                                                                                 |
+| :----------------------- | :------ | :----------- | :------------------------------------------------------------------------------------------ |
+| timeout                  | 60s     | Duration     | mqtt broker connect timeout in seconds and nanoseconds                                      |
+| url                      | -       | SecretString | MQTT url which includes schema, domain, port and credentials such as username and password. |
+| topic                    | -       | String       | mqtt topic to subscribe and source events from                                              |
+| client_id                | UUID V4 | String       | mqtt client ID. Using same client id in different connectors may close connection           |
+| payload_output_type      | binary  | String       | controls how the output of `payload` field is produced                                      |
+| max_incoming_packet_size | 10*1024 | usize        | MQTT max incoming packet size of `payload`                                                  |
+| max_outgoing_packet_size | 10*1024 | usize        | MQTT max outgoing packet size of `payload`                                                  |
 
 `url` option with type `SecretString` can be set as raw string value:
 ```yaml
@@ -38,7 +40,7 @@ JSON Serialized string with fields `mqtt_topic` and `payload`
 #### Payload Output Type
 
 | Value  | Output                       |
-|:-------|:-----------------------------|
+| :----- | :--------------------------- |
 | binary | Array of bytes               |
 | json   | UTF-8 JSON Serialized String |
 
@@ -62,6 +64,8 @@ mqtt:
     secs: 30
     nanos: 0
   payload_output_type: json
+  max_incoming_packet_size: 1048576
+  max_outgoing_packet_size: 1048576
 ```
 
 Run connector locally using `cdk` tool (from root directory or any sub-directory):

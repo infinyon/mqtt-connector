@@ -45,3 +45,13 @@ type = "string"
 title = "Timeout"
 description = "MQTT connection timeout"
 type = "object"
+
+[custom.properties.max_incoming_packet_size]
+title = "MaxIncomingPacketSize"
+description = "MQTT max incoming packet size of payload"
+type = "usize"
+
+[custom.properties.max_outgoing_packet_size]
+title = "MaxOutgoingPacketSize"
+description = "MQTT max outgoing packet size of payload"
+type = "usize"
