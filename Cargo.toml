@@ -49,7 +49,7 @@ rumqttc = { version = "0.24" }
 rustls = { version = "0.22" }
 
 fluvio = { git = "https://github.com/infinyon/fluvio", tag = "v0.12.0" }
-fluvio-connector-common = { git = "https://github.com/infinyon/fluvio", tag = "v0.12.0", features = ["derive"] }
+fluvio-connector-common = { git = "https://github.com/infinyon/fluvio", tag = "v0.17.1", features = ["derive"] }
 fluvio-future = { version = "0.7.0", default-features = false }
 
 # transitive version selection
