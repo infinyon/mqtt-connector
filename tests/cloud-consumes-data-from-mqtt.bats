@@ -14,7 +14,7 @@ setup() {
     sed -i.BAK "s/TOPIC/${TOPIC}/g" $FILE
     cat $FILE
 
-    fluvio cloud login --email ${FLUVIO_CLOUD_TEST_USERNAME} --password ${FLUVIO_CLOUD_TEST_PASSWORD}
+    fluvio cloud login --email ${CLOUD_USER_EMAIL} --password ${CLOUD_USER_PASSWORD}
     fluvio cloud cluster sync
     fluvio topic create $TOPIC
     fluvio cloud connector create --config $FILE
