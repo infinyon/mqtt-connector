@@ -51,8 +51,8 @@ jobs:
         if: ${{ matrix.environment == 'Production' }}
         env:
           FLUVIO_CLOUD_REMOTE: 'https://infinyon.cloud'
-          FLUVIO_CLOUD_TEST_USERNAME: ${{ secrets.HUB_USER_EMAIL }}
-          FLUVIO_CLOUD_TEST_PASSWORD: ${{ secrets.HUB_USER_PASSWORD }}
+          CLOUD_USER_EMAIL: ${{ secrets.ORG_CLOUD_SERVICE_EMAIL }}
+          CLOUD_USER_PASSWORD: ${{ secrets.ORG_CLOUD_SERVICE_PASSWD_PROD }}
         run: make cloud_e2e_test
 
       - name: Test Cloud Development
@@ -60,8 +60,8 @@ jobs:
         if: ${{ matrix.environment == 'Development' }}
         env:
           FLUVIO_CLOUD_REMOTE: 'https://dev.infinyon.cloud'
-          FLUVIO_CLOUD_TEST_USERNAME: ${{ secrets.DEV_HUB_USER_EMAIL }}
-          FLUVIO_CLOUD_TEST_PASSWORD: ${{ secrets.DEV_HUB_USER_PASSWORD }}
+          CLOUD_USER_EMAIL: ${{ secrets.ORG_CLOUD_SERVICE_EMAIL }}
+          CLOUD_USER_PASSWORD: ${{ secrets.ORG_CLOUD_SERVICE_PASSWD_DEV }}
         run: make cloud_e2e_test
 
   done:
