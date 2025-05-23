@@ -15,7 +15,7 @@ async-std = { workspace = true, features = ["attributes", "tokio1"]}
 serde = {workspace = true, features = ["derive"]}
 serde_json = { workspace = true, features = ["preserve_order"] }
 url = { version = "2.5", default-features = false }
-thiserror = { version = "1.0", default-features = false }
+thiserror = { version = "2.0", default-features = false }
 uuid = { version = "1.11", features = ["v4"] }
 rumqttc = { workspace = true, features = ["url", "websocket"] }
 rustls = { workspace = true }
