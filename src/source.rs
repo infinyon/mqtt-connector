@@ -52,6 +52,8 @@ impl MqttSource {
         }
         let mut options = MqttOptions::try_from(url.clone())?;
         options.set_keep_alive(config.timeout);
+        options.set_max_packet_size(config.max_incoming_packet_size, config.max_outgoing_packet_size);
+
         if url.scheme() == "mqtts" || url.scheme() == "ssl" {
             info!("using tls");
             let mut root_cert_store = rustls::RootCertStore::empty();
